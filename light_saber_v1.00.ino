@@ -1,9 +1,21 @@
 /**
- * File:  espada laser 
+ * File:  Espada laser electronica simple 
+ *        Un sensor acelerometro lee el movimiento de la espada y
+ *        reproduce sonidos y contrale un led dependiendo del movimiento 
+ *        La espada se prende y se apaga con un pulsador. 
+ *        Tiene cinco  estados 
+ *        Espada encendiendose 
+ *        Espada quieta, 
+ *        Espada moviendose, 
+ *        Espada golpeada. 
+ *        Espada apagandose 
+ *        
+ *        
+ *        
  * 
  *         
  * - Compiler:           Arduino 1.8.13
- * - Supported devices:  arduino pro or pro mini
+ * - Supported devices:  Arduino pro or pro mini
  *
  * \author               PT: educacion.ta@gmail.com
  *                       JS: juanschiavoni@gmail.com 
@@ -56,7 +68,7 @@ void setup()
     Button.init();
     Mpu6050.init();
     
-    Led.tgl() ;         // Señal de reset
+    Led.tgl() ;         // Señal de reset para el debug
     delay(500); 
     Led.tgl() ;
 
@@ -87,8 +99,7 @@ static uint8_t  count_move = N_MOVE_SOUND2;
    
     switch( st_loop ) {
         
-        // Estado de inicio
-        
+               
         case ST_INIT:
             
             st_loop = ST_WAIT_ON;
@@ -106,7 +117,7 @@ static uint8_t  count_move = N_MOVE_SOUND2;
              // se prende un timer que en ST_LOOP_ON se va a patear  T_TILT_SABER veces 
              
               st_loop = ST_ON;
-             startPlayback(snd_out_saber, sizeof(snd_out_saber)); // sonido de sable saliendo, no se usa existe el sonido real mecanico
+             startPlayback(snd_out_saber, sizeof(snd_out_saber)); //Sonido de sable saliendo.
               Timer_led.start();
             }
                   
@@ -115,7 +126,7 @@ static uint8_t  count_move = N_MOVE_SOUND2;
 
         case ST_ON:
         
-        // toglea el led N_TILT_SABER veces y pasa al estado idle
+        // Toglea el led N_TILT_SABER veces y pasa al estado idle
         
         if( Timer_led.expired( T_TILT_SABER ) ) {
                   
@@ -130,7 +141,7 @@ static uint8_t  count_move = N_MOVE_SOUND2;
 
            Led.on();           // Prende la luz de la espada.
            Timer_idle.start();
-           startPlayback(snd_idle_saber, sizeof(snd_idle_saber)); // sonido de sable idle
+           startPlayback(snd_idle_saber, sizeof(snd_idle_saber)); // Sonido de sable idle
            st_loop = ST_IDLE;
            
         }
@@ -139,10 +150,10 @@ static uint8_t  count_move = N_MOVE_SOUND2;
 
         case ST_IDLE:
         
-        // cada vez que expira el timer repite el sonido
+        // Cada vez que expira el timer repite el sonido.
         
         if( Timer_idle.expired( T_SOUND_IDLE ) ) {
-           startPlayback(snd_idle_saber, sizeof(snd_idle_saber)); // sonido de sable idle
+           startPlayback(snd_idle_saber, sizeof(snd_idle_saber)); //Sonido de sable idle
            Timer_idle.start();
         }
 
@@ -151,14 +162,14 @@ static uint8_t  count_move = N_MOVE_SOUND2;
         
         
         if ( Mpu6050.is_knock() ) {
-           startPlayback(snd_knock_saber, sizeof(snd_knock_saber)); // sonido de sable golpeado
+           startPlayback(snd_knock_saber, sizeof(snd_knock_saber)); // Sonido de sable golpeado
            Timer_led.start();
            count_tilt = N_TILT_SABER;
            st_loop = ST_KNOCK;
            
            }else if ( Mpu6050.is_move() ) {
                                        
-                     startPlayback(snd_move_2_saber, sizeof(snd_move_2_saber)); // sonido de sable movimiento 1
+                     startPlayback(snd_move_2_saber, sizeof(snd_move_2_saber)); // Sonido de sable movimiento 2
                                                                  
                      Timer_move.start();
                      st_loop = ST_MOVE;
@@ -167,14 +178,14 @@ static uint8_t  count_move = N_MOVE_SOUND2;
         if ( Button.is_pressed() ) {
              
               st_loop = ST_OFF;
-              startPlayback(snd_in_saber, sizeof(snd_in_saber)); // sonido de sable guardandose
+              startPlayback(snd_in_saber, sizeof(snd_in_saber)); //Ssonido de sable de sable guardandose
             }
             
         break;
 
          case ST_KNOCK:
          
-        // toglea el led N_TILT_SABER veces y pasa al estado IDLE
+        //Ttoglea el led N_TILT_SABER veces y pasa al estado IDLE
         
         if( Timer_led.expired( T_TILT_SABER ) ) {
                   
@@ -187,7 +198,7 @@ static uint8_t  count_move = N_MOVE_SOUND2;
 
            Led.on();           
            Timer_idle.start();
-           startPlayback(snd_idle_saber, sizeof(snd_idle_saber)); // sonido de sable idle
+           startPlayback(snd_idle_saber, sizeof(snd_idle_saber)); //Sonido de sable idle
            st_loop = ST_IDLE;
            
         }
@@ -197,7 +208,7 @@ static uint8_t  count_move = N_MOVE_SOUND2;
 
         case ST_MOVE:
           if( Timer_move.expired( T_SOUND_MOVE ) ) {
-           startPlayback(snd_idle_saber, sizeof(snd_idle_saber)); // sonido de sable idle
+           startPlayback(snd_idle_saber, sizeof(snd_idle_saber)); // Sonido de sable idle
            Timer_move.start();
            st_loop = ST_IDLE;
         }
