@@ -4,7 +4,7 @@
  * File:   Clase que controla el boton de configuracion y operacion
  *         del cartel.
  * - Compiler:           Arduino 1.8.13
- * - Supported devices:  mini
+ * - Supported devices:  Arduino pro or pro mini
  *
  * \author               PT: educacion.ta@gmail.com
  *                       JS: juanschiavoni@gmail.com 

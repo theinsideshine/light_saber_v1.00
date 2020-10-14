@@ -2,7 +2,7 @@
  * File:   Clase para controlar el buzzer
  *
  * - Compiler:           Arduino 1.8.13
- * - Supported devices:  mini
+ * - Supported devices:  Arduino pro or pro mini
  *
  * \author               PT: educacion.ta@gmail.com
  *                       JS: juanschiavoni@gmail.com 
