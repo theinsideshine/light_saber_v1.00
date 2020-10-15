@@ -1,8 +1,6 @@
-/**
- * File:   Clase que controla el boton de configuracion y operacion
- *         del cartel.
- * - Compiler:           Arduino 1.8.13
- * - Supported devices:  Arduino pro or pro mini
+/** - File: Class that controls  button
+  * - Compiler:           Arduino 1.8.13
+  * - Supported devices:  Arduino pro or pro mini
 
  *
  * \author               
@@ -25,7 +23,7 @@ void CButton::init( void )
     pinMode( PIN_BUTTON, INPUT_PULLUP );
 }
 
-// Resetea el evento de click para evitar falsos disparos.
+// Reset the click event to avoid false shots.
 bool CButton::is_pressed( void )
 {
 bool ret_val = state;
@@ -35,13 +33,13 @@ bool ret_val = state;
     return ret_val;
 }
 
-// Retorna true cuando el operador presiono el pulsador de programacion.
-// Aplica un mecanismo de antirebote.
+  // Returns true when the operator pressed the programming button.
+  // Apply an anti-bounce mechanism.
 void CButton::debounce( void )
 {
     state = (digitalRead( PIN_BUTTON ) == LOW);
-
-    // Despues que se presiona el pulsador debe permanecer 500 mS liberado.
+    
+  // After the button is pressed, it must remain 500 mS released.
     if( state ) {
         if( !Timer.expired( 500 ) ){
           state = false;

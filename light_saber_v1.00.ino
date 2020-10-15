@@ -1,17 +1,17 @@
 /**
- * File:  Espada laser electronica simple 
- *        Un sensor acelerometro lee el movimiento de la espada,
- *        dependiendo de los movimientos de la espada reproduce sonidos y controla un led  
- *        
- *        La espada se prende y se apaga con un pulsador.
+  * File: Simple electronic laser sword
+  * An accelerometer sensor reads the movement of the sword,
+  * depending on the movements of the sword, it plays sounds and controls a led
+  *
+  * The sword is turned on and off with a button.
 
- *        Tiene cinco  estados :
- *        
- *        Espada encendiendose 
- *        Espada quieta, 
- *        Espada moviendose, 
- *        Espada golpeada. 
- *        Espada apagandose 
+  * It has five states:
+  *
+  * Sword burning
+  * Sword without movement,
+  * Sword moving,
+  * Sword strike
+  * Sword fading
  *        
  *        
  *        
@@ -32,28 +32,28 @@
 #include "timer.h"
 #include "button.h"
 
-#include <PCM.h>   // El audio sale por el pin 11. 
+#include <PCM.h>   //Audio is output from pin 11.
 #include "sound.h"
 #include "mpu6050.h"
 
 
-#define ST_INIT                    0       // Inicializa el programa.
-#define ST_WAIT_ON                 1       // Espera que se prenda el sable.
-#define ST_ON                      2       // Prende la espada.
-#define ST_IDLE                    3       // Espada encendida.
-#define ST_KNOCK                   4       // La espada se golpeo. 
-#define ST_MOVE                    5       // La espada se movio.  
-#define ST_OFF                     6       // Apaga la espada.
+#define ST_INIT                    0       // Initialize the program.
+#define ST_WAIT_ON                 1       // Wait for the saber to ignite.
+#define ST_ON                      2       // Light the sword.
+#define ST_IDLE                    3       // Sword on.
+#define ST_KNOCK                   4       // The sword struck.
+#define ST_MOVE                    5       // The sword moved.  
+#define ST_OFF                     6       // Sword off.
 
 
 
-#define N_TILT_SABER                    8       // Veces que se prende y apaga el led en ST_KNOCK.
-#define T_TILT_SABER                    100     // Tiempo en milisegundo de togle del led en ST_KNOCK.
-#define N_MOVE_SOUND2                   2       // Cada N veces se reproduce el sonido 2 de movimiento  no implementado.
+#define N_TILT_SABER                    8       // Times the LED is turned on and off in ST_KNOCK.
+#define T_TILT_SABER                    100     // LED togle time in milliseconds in ST_KNOCK.
+#define N_MOVE_SOUND2                   2       // Every N times the motion sound 2 is played. Not implemented.
 
-#define T_SOUND_IDLE                    1000    // Tiempo de repeticion del sonido idle.
-#define T_SOUND_KNOCK                   500     // Tiempo del sonido golpe.
-#define T_SOUND_MOVE                    800    // Tiempo del sonido giro.
+#define T_SOUND_IDLE                    1000    // Idle sound repetition time.
+#define T_SOUND_KNOCK                   500     // Knock sound time.
+#define T_SOUND_MOVE                    800    // Turn sound time.
 
 CButton Button;
 CLed Led;
@@ -61,7 +61,7 @@ CMpu6050 Mpu6050;
 
 
 /*
- *  Inicializa los perfericos de la espada .
+ *  Initialize the sword peripherals.
  */
  
 void setup()
@@ -71,7 +71,7 @@ void setup()
     Button.init();
     Mpu6050.init();
     
-    Led.tgl() ;         // Señal de reset para el debug.
+    Led.tgl() ;         // Reset signal for debugging.
     delay(500); 
     Led.tgl() ;
 
@@ -80,7 +80,7 @@ void setup()
 
 
 /*
- * Loop de control de la espada laser.
+ * Control loop of the lightsaber.
  */
  
 void loop()
@@ -111,16 +111,16 @@ static uint8_t  count_move = N_MOVE_SOUND2;
 
         case ST_WAIT_ON:
         
-        // Al presionar el boton se prende el sable
-        // y realiza un parpadeo del led.
+        // Pressing the button turns on the saber
+        // and flashes the led.
         
         if ( Button.is_pressed() ) {
           
-             // En este estado, al requerirse el led titilar
-             // se prende un timer que en ST_LOOP_ON se va a patear  T_TILT_SABER veces. 
+             // In this state, the led blinks
+             // a timer is turned on that in ST_LOOP_ON is going to kick T_TILT_SABER times. 
              
             st_loop = ST_ON;
-            startPlayback(snd_out_saber, sizeof(snd_out_saber)); //Sonido de sable saliendo.
+            startPlayback(snd_out_saber, sizeof(snd_out_saber)); // Sound of saber coming out.
             Timer_led.start();
             }
                   
@@ -129,7 +129,7 @@ static uint8_t  count_move = N_MOVE_SOUND2;
 
         case ST_ON:
         
-        // Toglea el led N_TILT_SABER veces y pasa al estado idle.
+        // Toggle the N_TILT_SABER led times and go to idle state.
         
         if( Timer_led.expired( T_TILT_SABER ) ) {
                   
@@ -138,13 +138,13 @@ static uint8_t  count_move = N_MOVE_SOUND2;
              Timer_led.start();
             }
 
-        // Al expirar el contador de veces de TILT pasa a IDLE.
+        // When the TILT counter expires, it goes to IDLE.
          
         if ( !count_tilt )  {
 
-            Led.on();           // Prende la luz de la espada.
+            Led.on();          // Turn on the light of the sword.
             Timer_idle.start();
-            startPlayback(snd_idle_saber, sizeof(snd_idle_saber)); // Sonido de sable idle.
+            startPlayback(snd_idle_saber, sizeof(snd_idle_saber)); // Idle saber sound.
             st_loop = ST_IDLE;           
            }
                    
@@ -152,26 +152,26 @@ static uint8_t  count_move = N_MOVE_SOUND2;
 
         case ST_IDLE:
         
-        // Cada vez que expira el timer repite el sonido.
+        // Every time the timer expires it repeats the sound.
         
         if( Timer_idle.expired( T_SOUND_IDLE ) ) {
           
-           startPlayback(snd_idle_saber, sizeof(snd_idle_saber)); //Sonido de sable idle.
+           startPlayback(snd_idle_saber, sizeof(snd_idle_saber)); // Idle saber sound.
            Timer_idle.start();
           }
 
-        Mpu6050.get_accel();     // Lee la aceleracion. 
+        Mpu6050.get_accel();     // Read the acceleration.
        
         
         
         if ( Mpu6050.is_knock() ) {
-            startPlayback(snd_knock_saber, sizeof(snd_knock_saber)); // Sonido de sable golpeado.
+            startPlayback(snd_knock_saber, sizeof(snd_knock_saber)); // Sound of saber strike.
             Timer_led.start();
             count_tilt = N_TILT_SABER;
             st_loop = ST_KNOCK;
            
            }else if ( Mpu6050.is_move() ) {
-                     startPlayback(snd_move_2_saber, sizeof(snd_move_2_saber)); // Sonido de sable movimiento 2.
+                     startPlayback(snd_move_2_saber, sizeof(snd_move_2_saber)); // Sound of sword moving 2
                      Timer_move.start();
                      st_loop = ST_MOVE;
                     } 
@@ -179,14 +179,14 @@ static uint8_t  count_move = N_MOVE_SOUND2;
         if ( Button.is_pressed() ) {
              
              st_loop = ST_OFF;
-             startPlayback(snd_in_saber, sizeof(snd_in_saber)); //Ssonido de sable de sable guardandose.
+             startPlayback(snd_in_saber, sizeof(snd_in_saber)); // Sound of saber of saber saving.
             }
             
         break;
 
          case ST_KNOCK:
          
-        //Toglea el led N_TILT_SABER veces y pasa al estado IDLE.
+        // Toggle the led N_TILT_SABER times and it goes to the IDLE state. 
         
         if( Timer_led.expired( T_TILT_SABER ) ) {
                   
@@ -199,7 +199,7 @@ static uint8_t  count_move = N_MOVE_SOUND2;
 
            Led.on();           
            Timer_idle.start();
-           startPlayback(snd_idle_saber, sizeof(snd_idle_saber)); //Sonido de sable idle.
+           startPlayback(snd_idle_saber, sizeof(snd_idle_saber)); // Idle saber sound.
            st_loop = ST_IDLE;
           }
 
@@ -208,7 +208,7 @@ static uint8_t  count_move = N_MOVE_SOUND2;
 
         case ST_MOVE:
           if( Timer_move.expired( T_SOUND_MOVE ) ) {
-           startPlayback(snd_idle_saber, sizeof(snd_idle_saber)); // Sonido de sable idle.
+           startPlayback(snd_idle_saber, sizeof(snd_idle_saber)); // Idle saber sound.
            Timer_move.start();
            st_loop = ST_IDLE;
           }

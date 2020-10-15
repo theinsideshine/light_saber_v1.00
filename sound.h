@@ -1,8 +1,8 @@
 /**
- * File:   Sonidos de la espada laser 
+ * File: Lightsaber Sounds 
  * 
  * - Compiler:           Arduino 1.8.13
- * - Supported devices:  mini
+ * - Supported devices:  Arduino pro or pro mini
  *
  * \author               PT: educacion.ta@gmail.com
  *                       

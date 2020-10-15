@@ -1,6 +1,7 @@
 /**
- * File:   Clase que controla el boton de configuracion y operacion
- *         del cartel.
+  * File: Class that controls  button
+  * 
+  * 
  * - Compiler:           Arduino 1.8.13
  * - Supported devices:  Arduino pro or pro mini
 
@@ -19,7 +20,7 @@
 #include "Arduino.h"
 #include "timer.h"
 
-#define PIN_BUTTON                  7       // Pin del pulsador de configuracion.
+#define PIN_BUTTON                  7       // On / off button pin.
 
 class CButton
 {
@@ -31,7 +32,7 @@ class CButton
 
   private:
       CTimer Timer;
-      bool state;                   // TRUE presionado.
+      bool state;                   // TRUE pressed.
 };
 
 #endif // BUTTON_H

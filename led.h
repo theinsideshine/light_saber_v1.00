@@ -1,5 +1,5 @@
 /**
- * File:   Clase para controlar el buzzer
+ * File:   Class that controls  led.
  *
  * - Compiler:           Arduino 1.8.13
  * - Supported devices:  Arduino pro or pro mini
@@ -16,7 +16,7 @@
 
 #include "Arduino.h"
 
-#define PIN_LED                      9       // Pin del buzzer.
+#define PIN_LED                      9       // Led pin.
 
 class CLed
 {

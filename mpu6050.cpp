@@ -1,6 +1,7 @@
 /**
- * File:   Clase que controla el boton aceletrometro MPU6050
- *         de la espada laser
+ * File: Class that controls the MPU6050 acceletrometer
+ *       of the sword 
+
  * - Compiler:           Arduino 1.8.13
  * - Supported devices:  Arduino pro or pro mini
  *
@@ -22,7 +23,7 @@ CMpu6050::CMpu6050()
 void CMpu6050::init( void )
 {
 
-    //La I2C del arduino mino esta en A4 SDA y A5 SCL
+    //The I2C of the arduino mino is in A4 SDA and A5 SCL
 
     Wire.begin();                      //Inicializa la I2C.
     Wire.beginTransmission(0b1101000); //This is the I2C address of the MPU (b1101000/b1101001 for AC0 low/high datasheet sec. 9.2)
@@ -40,7 +41,7 @@ void CMpu6050::init( void )
 }
 
 /*
- *Lee el registro de la aceleracion y lo convierte a los valores fisicos. 
+ * Read the acceleration log and convert it to physical values.
  * 
  */
 void CMpu6050::get_accel(void) {
@@ -62,8 +63,8 @@ void CMpu6050::get_accel(void) {
 
 
 /*
- * Devuelve True si la aceleracion paso los limites del golpe.
- * como primera aproximacion se definieron 2 zonas de aceleracion para validar el moviento una en el eje Y y otra en el X
+ * Returns True if the acceleration passed the stroke limits.
+  * As a first approximation, 2 acceleration zones were defined to validate the movement, one on the Y axis and the other on the X axis.
  */
 
 bool CMpu6050::is_knock( void )
@@ -87,10 +88,10 @@ bool state = false;
 
 
 /*
- * Detecta el movimiento de la espada       
- * para que no se confunda con las zonas de movimiento se usa el eje z para detectar el choque
- * se definieron dos zona de acelarcion para el eje z
- */
+  * Detects the movement of the sword
+  * so that it is not confused with the movement zones, the z axis is used to detect the crash
+  * Two acceleration zones were defined for the z axis
+  */
 
 bool CMpu6050::is_move ( void ) {
   

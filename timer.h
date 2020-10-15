@@ -1,7 +1,7 @@
 /**
- * File:   Clase de timers por software basados en la funcion millis()
- *         de arduino que al estar basada en un timer de la cpu por irq,
-           no bloquea la ejecucion. 
+ * File: Class of software timers based on the millis () function
+ * from arduino that being based on a cpu timer by irq,
+ * does not block execution.
  *
  * - Compiler:           Arduino 1.8.13
  * - Supported devices:  mini

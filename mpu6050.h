@@ -1,8 +1,9 @@
 /**
- * File:   Clase que controla el boton aceletrometro MPU6050
- *         de la espada laser
+  * File: Class that controls the MPU6050 acceletrometer
+ *       of the sword
+ *       
  * - Compiler:           Arduino 1.8.13
- * - Supported devices:  mini
+ * - Supported devices:  Arduino pro or pro mini
  *
  * \author               PT: educacion.ta@gmail.com
  *                        
@@ -18,29 +19,32 @@
 #include "Arduino.h"
 #include <Wire.h>
 
-//La I2C del arduino mino esta en A4 SDA y A5 SCL
+ //The I2C of the arduino mino is in A4 SDA and A5 SCL
+
 
 /*
- *  Definicion de la zonas de moviento
+ *  Definition of movement zones
  *  
  *  
  */
 
-#define MAX_P_XY         1.2                        //Valor maximo positivo del eje x e y
-#define MAX_N_XY        -1.2                        //Valor maximo negativo del eje x e y
+#define MAX_P_XY         1.2                        // Maximum positive value of the x and y axis
+#define MAX_N_XY        -1.2                        // Maximum negative value of the x and y axis
 
 
-#define Z1_MAX_Z         0                         //Valor maximo del eje Z de la zona 1
-#define Z1_MIN_Z         -0.5                      //Valor minimo del eje Z de la zona 1 
+#define Z1_MAX_Z         0                         // Maximum value of the Z axis of zone 1
+#define Z1_MIN_Z         -0.5                      // Minimum value of the Z axis of zone 1
 
-#define Z2_MAX_Z         -1.5                     //Valor maximo del eje Z de la zona 2
-#define Z2_MIN_Z         -2                       //Valor minimo del eje Z de la zona 2
+#define Z2_MAX_Z         -1.5                     // Maximum value of the Z axis of zone 2
+#define Z2_MIN_Z         -2                       // Minimum value of the Z axis of zone 2
 
 
 
-/*
- * Estrutura de datos de aceleracion  
- */
+/* 
+ * Acceleration data structure * 
+ * 
+  */
+  
 typedef struct tag_ACCEL{
   long  accelX;
   long  accelY;
@@ -61,7 +65,7 @@ class CMpu6050
     
     
   private:
-      ACCEL Accel;                  // Estrutura de datos de aceleracion    
+      ACCEL Accel;                  // Acceleration data structure   
       
 };
 

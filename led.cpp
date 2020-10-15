@@ -1,5 +1,5 @@
 /**
- * File:   Clase para controlar el buzzer.
+ * File:   Class that controls  led.
  /**
  * File:   Clase que controla el boton de configuracion y operacion
  *         del cartel.
@@ -28,7 +28,7 @@ void CLed::init( void )
 }
 
 /*
- * El led prende con un HIGH
+ * The led turns on with a HIGH
  */
  
 void CLed::on()
@@ -41,8 +41,9 @@ void CLed::off()
     digitalWrite( PIN_LED, LOW );
 }
 
-// Cambia de estado el buzzer.
-// Retorna el estado anterior.
+// The buzzer changes state.
+// Returns the previous state.
+
 bool CLed::tgl()
 {
 bool state = (digitalRead( PIN_LED ) == LOW);
