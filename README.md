@@ -15,7 +15,7 @@ Support
 
 If you need assistance, contact me:
 
-* Email      : eduacacion.ta@gmail.com
+* Email      : educacion.ta@gmail.com
 
 
 Contributing
