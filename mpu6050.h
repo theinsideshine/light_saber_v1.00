@@ -21,7 +21,6 @@
 
  //The I2C of the arduino mino is in A4 SDA and A5 SCL
 
-
 /*
  *  Definition of movement zones
  *  
@@ -37,8 +36,6 @@
 
 #define Z2_MAX_Z         -1.5                     // Maximum value of the Z axis of zone 2
 #define Z2_MIN_Z         -2                       // Minimum value of the Z axis of zone 2
-
-
 
 /* 
  * Acceleration data structure * 

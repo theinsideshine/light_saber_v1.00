@@ -38,6 +38,7 @@ void CMpu6050::init( void )
     Wire.write(0x1C);                 //Accessing the register 1C - Acccelerometer Configuration (Sec. 4.5) 
     Wire.write(0b00000000);          //Setting the accel to +/- 2g
     Wire.endTransmission(); 
+    
 }
 
 /*
@@ -58,8 +59,7 @@ void CMpu6050::get_accel(void) {
   Accel.gForceX = Accel.accelX / 16384.0;
   Accel.gForceY = Accel.accelY / 16384.0;
   Accel.gForceZ = Accel.accelZ / 16384.0;
- 
-  }
+ }
 
 
 /*
@@ -71,8 +71,7 @@ bool CMpu6050::is_knock( void )
 {
 bool state = false; 
 
- if  ( 
-        
+ if  (         
         ( Accel.gForceX > MAX_P_XY )  || ( Accel.gForceY > MAX_P_XY )  ||
            
         ( Accel.gForceX < MAX_N_XY ) || ( Accel.gForceY < MAX_N_XY ) 
@@ -84,8 +83,6 @@ bool state = false;
   return state;
 
 }
-
-
 
 /*
   * Detects the movement of the sword

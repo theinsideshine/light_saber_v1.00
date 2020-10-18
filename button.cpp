@@ -35,6 +35,7 @@ bool ret_val = state;
 
   // Returns true when the operator pressed the programming button.
   // Apply an anti-bounce mechanism.
+  
 void CButton::debounce( void )
 {
     state = (digitalRead( PIN_BUTTON ) == LOW);
