@@ -20,6 +20,7 @@ Some images of the project are:
 ![](images/hilt.gif)
 ![](images/proto.gif)
 ![](images/saber.gif)
+[![Completion of the first stage of the prototype of the laser sword with electronics.]](https://www.youtube.com/watch?v=DzVGOHpBsGI) 
 
 
 
